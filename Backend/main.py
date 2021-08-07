@@ -22,13 +22,13 @@ def send_data():
     response = client.label_detection(image=image)
     labels = response.label_annotations
 
-    data_dictionary = {}
+    data_list = []
 
     for label in labels:
         tag = label.description
         if " " not in tag:
-            data_dictionary[tag] = WebScraper.find_captions(tag)
+            data_list.extend(WebScraper.find_captions(tag))
 
-    return data_dictionary
+    return data_list
 
 
