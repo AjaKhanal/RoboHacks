@@ -4,6 +4,8 @@ import SectionHeader from './partials/SectionHeader';
 import React, { useEffect, useState } from "react";
 import { useDropzone } from 'react-dropzone';
 import Image from '../elements/Image';
+import axios from 'axios'
+import request from "request";
 
 const propTypes = {
   ...SectionSplitProps.types
@@ -75,6 +77,12 @@ const FeaturesSplit = ({
       setFiles(acceptedFiles.map(file => Object.assign(file, {
         preview: URL.createObjectURL(file)
       })));
+      const formData = new FormData();
+      var req = request.post('http://127.0.0.1:5000/upload-image');
+      req.attach(file.name, files[0]);
+      req.end(callback).then(res =>{
+        console.log(res)
+      });
     }
   });
 
@@ -111,6 +119,14 @@ const FeaturesSplit = ({
     files.forEach(file => URL.revokeObjectURL(file.preview));
   }, [files]);
 
+
+ const fileUploadHandler = () => {
+   const fd = new FormData();
+   axios.post('http://127.0.0.1:5000/upload-image', fd).then(res =>{
+     console.log(res)
+   });
+ }
+
   return (
     <section
       {...props}
@@ -123,7 +139,7 @@ const FeaturesSplit = ({
           <section className="App">
             <div className="reveal-from-bottom" data-reveal-delay="200">
               <div {...getRootProps({className: 'dropzone'})}>
-                <input {...getInputProps()} />
+                <input {...getInputProps()}/>
                 <p>Drag and drop your image here</p>
               </div>
             </div>
