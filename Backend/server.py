@@ -1,15 +1,19 @@
 import os
 
 from flask import Flask, jsonify, request, redirect, render_template
+from flask_cors import CORS, cross_origin
 from werkzeug.utils import secure_filename
 import main
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 @app.route('/')
+@cross_origin()
 def index():
-    return jsonify(main.send_data())
+    return "<p>Hello, World!</p>"
 
 
 if __name__ == "__main__":
@@ -41,6 +45,7 @@ def allowed_image_filesize(filesize):
 
 
 @app.route("/upload-image", methods=["GET", "POST"])
+@cross_origin()
 def upload_image():
     if request.method == "POST":
         if request.files:
@@ -64,5 +69,6 @@ def upload_image():
                 else:
                     print("That file extension is not allowed")
                     return redirect(request.url)
+    return "<p>Hello, World!</p>"
 
 

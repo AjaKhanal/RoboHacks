@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "classnames": "^2.2.6",
+    "cors": "^2.8.5",
     "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
     "react": "^16.13.1",
@@ -38,6 +39,8 @@
     ]
   },
   "devDependencies": {
+    "axios": "^0.21.1",
     "react-dropzone": "^11.3.4"
-  }
+  },
+  "proxy": "http://127.0.0.1:5000/"
 }
