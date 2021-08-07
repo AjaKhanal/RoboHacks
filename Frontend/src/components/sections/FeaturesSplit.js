@@ -124,7 +124,7 @@ const FeaturesSplit = ({
             <div className="reveal-from-bottom" data-reveal-delay="200">
               <div {...getRootProps({className: 'dropzone'})}>
                 <input {...getInputProps()} />
-                <p>Drag and drop your image here</p>
+                <p><br/>Drag and drop your image here</p>
               </div>
             </div>
           </section>
