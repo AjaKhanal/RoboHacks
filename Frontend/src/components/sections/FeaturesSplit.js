@@ -5,6 +5,8 @@ import React, { useEffect, useState } from "react";
 import { useDropzone } from 'react-dropzone';
 import Image from '../elements/Image';
 import importedData from './message.json';
+import axios from 'axios'
+import request from "request";
 
 const propTypes = {
   ...SectionSplitProps.types
@@ -118,6 +120,7 @@ const FeaturesSplit = ({
     // Make sure to revoke the data uris to avoid memory leaks
     files.forEach(file => URL.revokeObjectURL(file.preview));
   }, [files]);
+
 
   return (
     <section

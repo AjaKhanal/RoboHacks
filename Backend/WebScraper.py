@@ -24,8 +24,14 @@ def find_captions(label):
 
     data = []
     for container in containers:
-        data.append((cleanhtml(str(container))))
+        data_dict = {
+            "tag": label
+        }
+        data_dict.update({"caption": cleanhtml(str(container))})
+        data.append(data_dict)
+
     return data
 
+# print(find_captions("nose"))
 
 
