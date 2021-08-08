@@ -40,6 +40,24 @@
 		border-color: #6163FF;
 	}
 
+	.container {
+		display: flex;
+		flex-direction: column;
+		font-family: sans-serif;
+	  }
+	  
+	.container > p {
+		font-size: 1rem;
+	}
+	  
+	.container > em {
+		font-size: .8rem;
+	}
+
+	li {
+		list-style-type: none;
+	}
+
 }
 
 @include media( '>medium' ) {
