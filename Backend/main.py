@@ -1,5 +1,6 @@
-import os
+import os 
 import io
+import glob
 from google.cloud import vision_v1
 from google.cloud.vision_v1 import types
 
@@ -12,8 +13,11 @@ def send_data():
 
     client = vision_v1.ImageAnnotatorClient()
 
-    file_name = r'test-beach.jpg'
-    image_path = f'./images/test_beach.jpg'
+    image_path = "/Users/soranismail/Developer/RoboHacks/Backend/images"
+
+    file_name = os.listdir(image_path)
+
+    image_path = image_path + "/" + file_name[0]
 
     with io.open(image_path, 'rb') as image_file:
         content = image_file.read()
