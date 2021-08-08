@@ -1,12 +1,14 @@
 import classNames from 'classnames';
 import { SectionSplitProps } from '../../utils/SectionProps';
 import SectionHeader from './partials/SectionHeader';
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Component } from "react";
 import { useDropzone } from 'react-dropzone';
 import Image from '../elements/Image';
+import axios from 'axios';
 import importedData from './message.json';
-import axios from 'axios'
 import request from "request";
+import Button from "../elements/Button";
+import {bind} from "lodash";
 
 const propTypes = {
   ...SectionSplitProps.types
@@ -119,8 +121,41 @@ const FeaturesSplit = ({
   useEffect(() => () => {
     // Make sure to revoke the data uris to avoid memory leaks
     files.forEach(file => URL.revokeObjectURL(file.preview));
-  }, [files]);
+  }, [files])
 
+  const [file, setFile] = useState('')
+  const [fileName, setFileName] = useState('Drag and drop file')
+  const [uploadedFile, setUploadedFile] = useState({})
+
+  const onChange = e => {
+    setFile(e.target.files[0]);
+    setFileName(e.target.files[0].name);
+  }
+
+  const onSubmit = async e => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try{
+      const res = await axios.post('http://127.0.0.1:5000', formData,{
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+
+      console.log(res);
+
+      const {fileName, filePath} = res.data;
+      setUploadedFile({fileName, filePath});
+    }catch (err){
+      if(err.response.status === 500){
+        console.log("Server sided problem")
+      } else {
+        console.log(err.response.data.message);
+      }
+    }
+  }
 
   return (
     <section
@@ -133,10 +168,28 @@ const FeaturesSplit = ({
           <SectionHeader data={sectionHeader} className="center-content" />
           <section className="App">
             <div className="reveal-from-bottom" data-reveal-delay="200">
-              <div {...getRootProps({className: 'dropzone'})}>
-                <input {...getInputProps()} />
-                <p>Drag and drop your image here</p>
-              </div>
+              <form onSubmit={onSubmit}>
+                <div {...getRootProps({className: 'dropzone'})}>
+                  <div className='custom-file mb-4'>
+                    <input
+                        type='file'
+                        className='custom-file-input'
+                        id='customFile'
+                        onChange={onChange}
+                        {...getInputProps()}
+                    />
+                    <p><br/>Drag and drop your image here</p>
+                  </div>
+                </div>
+                <input
+                    id="upload"
+                    color="primary"
+                    type='submit'
+                    value='Upload'
+                    className='btn btn-primary btn-block mt-4'
+                />
+              </form>
+
             </div>
             <div className={
                 classNames(
