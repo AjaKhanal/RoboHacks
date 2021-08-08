@@ -33,6 +33,8 @@ def send_data():
         if " " not in tag:
             data_list.extend(WebScraper.find_captions(tag))
 
+    os.remove(image_path)
+
     return data_list
 
 
