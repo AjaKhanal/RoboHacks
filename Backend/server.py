@@ -10,14 +10,11 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 
-@app.route('/')
-@cross_origin()
-def index():
-    return "<p>Hello, World!</p>"
+# @app.route('/')
+# @cross_origin()
+# def index():
+#     return "<p>Hello, World!</p>"
 
-
-if __name__ == "__main__":
-    app.run(debug=True)
 
 app.config["IMAGE_UPLOADS"] = "./images"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
@@ -44,31 +41,12 @@ def allowed_image_filesize(filesize):
         return False
 
 
-@app.route("/upload-image", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 @cross_origin()
 def upload_image():
-    if request.method == "POST":
-        if request.files:
-            if "filesize" in request.cookies:
-                if not allowed_image_filesize(request.cookies["filesize"]):
-                    print("Filesize exceeded maximum limit")
-                    return redirect(request.url)
-
-                image = request.files["image"]
-
-                if image.filename == "":
-                    print("No filename")
-                    return redirect(request.url)
-
-                if allowed_image(image.filename):
-                    filename = secure_filename(image.filename)
-                    image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
-                    print("Image saved")
-                    return redirect(request.url)
-
-                else:
-                    print("That file extension is not allowed")
-                    return redirect(request.url)
     return "<p>Hello, World!</p>"
 
+
+if __name__ == "__main__":
+    app.run(debug=True)
 
