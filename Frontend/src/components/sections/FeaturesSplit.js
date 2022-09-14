@@ -5,6 +5,7 @@ import React, { useEffect, useState, Component } from "react";
 import { useDropzone } from 'react-dropzone';
 import Image from '../elements/Image';
 import axios from 'axios';
+import importedData from './message.json';
 import request from "request";
 import Button from "../elements/Button";
 import {bind} from "lodash";
@@ -56,7 +57,7 @@ const FeaturesSplit = ({
 
   const sectionHeader = {
     title: 'Try it out!',
-    paragraph: 'Upload an image and let Name TBA generate captions and tags for you.'
+    paragraph: 'Upload an image and let CaptionAI generate captions and tags for you.'
   };
 
   const thumbsContainer = {
@@ -67,7 +68,7 @@ const FeaturesSplit = ({
   };
 
 
-  const json = '{"water":["babe im wet","its raining lmao"],"beach":["I can be your beach","sand in my pussy"]}';
+  const json = '[{"tag" : "water","caption" : "Be my beach"},{"tag" : "water","caption" : "its sandy lmao"},{"tag" : "clouds","caption" : "come smoke it up with me"},{"tag" : "clouds","caption" : "takes puff you know, you only need 3 wipes to realise you only needed 2"}]';
   const jsonObj = JSON.parse(json);
   var values = {}
 
@@ -100,13 +101,20 @@ const FeaturesSplit = ({
   ));
 
   // Map the instagram captions to the page
-  const captions = Object.entries(jsonObj).map(entry => {
-    let key = entry[0];
-    let value = entry[1];
+  const captions = importedData.map(entry => {
     return(
-        <li key={key}>
-          {value}
-        </li>
+      <li key={entry.tag}>
+        "{entry.caption}"
+      </li>
+    )
+  });
+
+  // Map the instagram hashtags to the page
+  const hashtags = importedData.map(entry => {
+    return(
+      <li key={entry.tag}>
+        #{entry.tag}
+      </li>
     )
   });
 
@@ -181,7 +189,15 @@ const FeaturesSplit = ({
                     className='btn btn-primary btn-block mt-4'
                 />
               </form>
+
             </div>
+            <div className={
+                classNames(
+                  'split-item-image center-content-mobile reveal-from-bottom',
+                  imageFill && 'split-item-image-fill'
+                )}>
+                <div>{thumbs}</div>
+              </div>
           </section>
 
           <div className={splitClasses}>
@@ -193,16 +209,6 @@ const FeaturesSplit = ({
                 <p className="m-0">
                   <div>{captions}</div>
                   </p>
-              </div>
-
-              <div className={
-                classNames(
-                  'split-item-image center-content-mobile reveal-from-bottom',
-                  imageFill && 'split-item-image-fill'
-                )}
-                data-reveal-container=".split-item">
-
-                <div>{thumbs}</div>
               </div>
             </div>
           </div>

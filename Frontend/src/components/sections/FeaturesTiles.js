@@ -45,7 +45,7 @@ const FeaturesTiles = ({
 
   const sectionHeader = {
     title: 'From picture to caption',
-    paragraph: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum — semper quis lectus nulla at volutpat diam ut venenatis.'
+    paragraph: 'CaptionAI will take any photo you upload, and generate a set of Instagram captions and tags for you. Instantly making your photo ready for posting!'
   };
 
   return (
@@ -74,7 +74,7 @@ const FeaturesTiles = ({
                     Inspired by A.I.
                     </h4>
                   <p className="m-0 text-sm">
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat.
+                    CaptionAI utilizes the Artifical Intelligence technologies supplimented by Google's Cloud Vision API to analyze your image and generate relevant labels and tags.
                     </p>
                 </div>
               </div>
@@ -96,7 +96,7 @@ const FeaturesTiles = ({
                     Perfected by N.L.P.
                     </h4>
                   <p className="m-0 text-sm">
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat.
+                    CaptionAI utilizes an optimized Natural-Language Processing algorithm to efficiently create search queries in order to find relevant captions. 
                     </p>
                 </div>
               </div>
@@ -118,7 +118,7 @@ const FeaturesTiles = ({
                     Modernized by Automation
                     </h4>
                   <p className="m-0 text-sm">
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat.
+                    Using the generated search queries, CaptionAI automatically searches through the web to find fitting captions for your image.
                     </p>
                 </div>
               </div>
