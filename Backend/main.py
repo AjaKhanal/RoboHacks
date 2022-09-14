@@ -1,6 +1,5 @@
-import os 
+import os
 import io
-import glob
 from google.cloud import vision_v1
 from google.cloud.vision_v1 import types
 
@@ -10,13 +9,9 @@ import WebScraper
 def send_data():
 
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'./venv/GoogleVisionAPI.json'
-
     client = vision_v1.ImageAnnotatorClient()
-
-    image_path = "/Users/soranismail/Developer/RoboHacks/Backend/images"
-
+    image_path = 'C:/Users/babu/PycharmProjects/RoboHacks/Backend/images'
     file_name = os.listdir(image_path)
-
     image_path = image_path + "/" + file_name[0]
 
     with io.open(image_path, 'rb') as image_file:
@@ -38,3 +33,4 @@ def send_data():
     return data_list
 
 
+print(send_data())
