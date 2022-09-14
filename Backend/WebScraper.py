@@ -32,6 +32,7 @@ def find_captions(label):
 
     return data
 
-# print(find_captions("nose"))
+
+print(find_captions("beach"))
 
 

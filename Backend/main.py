@@ -9,11 +9,10 @@ import WebScraper
 def send_data():
 
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'./venv/GoogleVisionAPI.json'
-
     client = vision_v1.ImageAnnotatorClient()
-
-    file_name = r'test-beach.jpg'
-    image_path = f'./images/test_beach.jpg'
+    image_path = 'C:/Users/babu/PycharmProjects/RoboHacks/Backend/images'
+    file_name = os.listdir(image_path)
+    image_path = image_path + "/" + file_name[0]
 
     with io.open(image_path, 'rb') as image_file:
         content = image_file.read()
@@ -29,6 +28,9 @@ def send_data():
         if " " not in tag:
             data_list.extend(WebScraper.find_captions(tag))
 
+    os.remove(image_path)
+
     return data_list
 
 
+print(send_data())

@@ -1,52 +1,39 @@
 import os
-
-from flask import Flask, jsonify, request, redirect, render_template
-from flask_cors import CORS, cross_origin
+from flask import Flask, request, jsonify
+from flask_cors import cross_origin, CORS
 from werkzeug.utils import secure_filename
 import main
+
+UPLOAD_FOLDER = 'C:/Users/babu/PycharmProjects/RoboHacks/Backend/images'
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.secret_key = "Super Secret Key"
 
 
-# @app.route('/')
-# @cross_origin()
-# def index():
-#     return "<p>Hello, World!</p>"
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-app.config["IMAGE_UPLOADS"] = "./images"
-app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
-app.config["MAX_IMAGE_FILESIZE"] = 0.5 * 1024 * 1024
-
-
-def allowed_image(filename):
-
-    if not "." in filename:
-        return False
-
-    ext = filename.rsplit(".", 1)[1]
-
-    if ext.upper() in app.config["ALLOWED_IMAGE_EXTENSIONS"]:
-        return True
-    else:
-        return False
-
-
-def allowed_image_filesize(filesize):
-    if int(filesize) <= app.config["MAX_IMAGE_FILESIZE"]:
-        return True
-    else:
-        return False
-
-
-@app.route("/", methods=["GET", "POST"])
+@app.route('/upload-file', methods=['GET', 'POST'])
 @cross_origin()
-def upload_image():
-    return "<p>Hello, World!</p>"
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            return "Error"
+
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return jsonify(main.send_data())
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
 
