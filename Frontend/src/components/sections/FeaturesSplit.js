@@ -104,19 +104,23 @@ const FeaturesSplit = ({
   const captions = importedData.map(entry => {
     return(
       <li key={entry.tag}>
-        "{entry.caption}"
+        {entry.caption.split('"').join("")}
       </li>
     )
   });
 
-  // Map the instagram hashtags to the page
-  const hashtags = importedData.map(entry => {
+  // Produce a new set containing only the unique hashtags
+  const uniqueTags = [...new Set(importedData.map(entry => entry.tag))];
+
+  // Map the instagram captions to the page
+  const hashtags = uniqueTags.map(entry => {
     return(
-      <li key={entry.tag}>
-        #{entry.tag}
+      <li key={entry}>
+        #{entry.split('"').join("")}
       </li>
     )
   });
+ 
 
   useEffect(() => () => {
     // Make sure to revoke the data uris to avoid memory leaks
@@ -212,7 +216,17 @@ const FeaturesSplit = ({
               </div>
             </div>
           </div>
-        </div>
+          <div className="split-item">
+              <div className="split-item-content center-content-mobile reveal-from-right" data-reveal-container=".split-item">
+                <h3 className="mt-0 mb-12">
+                  Hashtags
+                  </h3>
+                <p className="m-0">
+                  <div>{hashtags}</div>
+                  </p>
+              </div>
+            </div>
+          </div>
       </div>
     </section>
   );
